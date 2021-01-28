@@ -1,0 +1,43 @@
+{
+    "https://c1.yujitokiwa.jp/moodle": {
+        "client_id": "5Fop2t6Vdu9MBGf",
+        "auth_login_url": "https://c1.yujitokiwa.jp/moodle/mod/lti/auth.php",
+        "auth_token_url": "https://c1.yujitokiwa.jp/moodle/mod/lti/token.php",
+        "key_set_url": "https://c1.yujitokiwa.jp/moodle/mod/lti/certs.php",
+        "private_key_file": "/Tool_Pri.key",
+        "deployment": [
+            "1"
+        ]
+    },
+    "https://c3.yujitokiwa.jp/moodle": {
+        "client_id": "C1I9mztu7D1zL5o",
+        "auth_login_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/auth.php",
+        "auth_token_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/token.php",
+        "key_set_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/certs.php",
+        "private_key_file": "/Tool_Pri.key",
+        "deployment": [
+            "1"
+        ]
+    },
+    "https://lti-ri.imsglobal.org": {
+        "client_id": "12345",
+        "auth_login_url": "https://lti-ri.imsglobal.org/platforms/1592/authorizations/new",
+        "auth_token_url": "https://lti-ri.imsglobal.org/platforms/1592/access_tokens",
+        "key_set_url": "https://lti-ri.imsglobal.org/platforms/1592/platform_keys/1561.json",
+        "private_key_file": "/P_pri.pem",
+        "deployment": [
+            "1"
+        ]
+    },
+    "http://localhost": {
+        "client_id": "d42df408-70f5-4b60-8274-6c98d3b9468d",
+        "auth_login_url": "http://localhost/platform/login.php",
+        "auth_token_url": "http://localhost/platform/token.php",
+        "key_set_url": "http://localhost/platform/jwks.php",
+        "private_key_file": "/keys/private.key",
+        "kid": "58f36e10-c1c1-4df0-af8b-85c857d1634f",
+        "deployment": [
+            "8c49a5fa-f955-405e-865f-3d7e959e809f"
+        ]
+    }
+}
