@@ -19,6 +19,16 @@
             "1"
         ]
     },
+    "https://c3.yujitokiwa.jp/moodle": {
+        "client_id": "tlmgjAGlTJ8Kbqr",
+        "auth_login_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/auth.php",
+        "auth_token_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/token.php",
+        "key_set_url": "https://c3.yujitokiwa.jp/moodle/mod/lti/certs.php",
+        "private_key_file": "/Tool_Pri.key",
+        "deployment": [
+            "3"
+        ]
+    },
     "https://lti-ri.imsglobal.org": {
         "client_id": "12345",
         "auth_login_url": "https://lti-ri.imsglobal.org/platforms/1592/authorizations/new",
