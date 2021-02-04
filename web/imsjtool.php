@@ -1,4 +1,6 @@
 <?php
+//login.phpとgame.phpがhpptサーバのDocumentRootに設定されていることを確認します。
+//
 //現在実行しているスクリプトのファイル名です。
 echo '[PHP_SELF] : '.$_SERVER['PHP_SELF']."<br/>\n";
 //現在のスクリプトが実行されているサーバの IP アドレスです。
