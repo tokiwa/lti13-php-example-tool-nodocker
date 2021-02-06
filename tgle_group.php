@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TGLE</title>
-<!--    Bootstrap-->
+    <!--    Bootstrap begin-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -17,6 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <!--    Bootstrap end-->
 </head>
 
 <body>
@@ -26,30 +27,37 @@
         <p class="text-center">Tools for Group Learning Environment</p>
     </div>
 
-<?php
+    <?php
+// user_id & course_id were submitted by GET from main.php
+    if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+    }
+    if (isset($_GET['course_id'])) {
+        $course_id = $_GET['course_id'];
+    }
 
-if(isset($_GET['user_id'])) {
-    $user_id = $_GET['user_id'];
-}
+// Database search for latest group and seat position
+    $mysqli = new mysqli('localhost', 'tgleuser', 'tglepass', 'tgle');
 
-$mysqli = new mysqli('localhost', 'tgleuser', 'tglepass', 'tgle');
+    if ($mysqli->connect_error) {
+        die("connect_error - " . $mysqli->connect_error);
+    } else {
+        $mysqli->set_charset("utf8");
+        $sql = 'select user_id,seat,grp from seats where user_id = "' . $user_id . '" order by updated_at desc limit 1 ';
+        $result = $mysqli->query($sql) or die("*tgle error* " . $sql);
+        $rows = $result->fetch_array(MYSQLI_ASSOC);
 
-if ($mysqli->connect_error) {
-    die("connect_error - " . $mysqli->connect_error);
-} else {
-    $mysqli->set_charset("utf8");
-    $sql = 'select user_id,seat,grp from seats where user_id = "' . $user_id . '" order by updated_at desc limit 1 ';
-    $result = $mysqli->query($sql) or die("*tgle error* " . $sql);
-    $rows = $result->fetch_array(MYSQLI_ASSOC);
+// View data by Bootstrap
+        echo "<h2 class='text-center'> course_id: " . $course_id . "</h2>";
+        echo "<h2 class='text-center'> user_id: " . $rows['user_id'] . "</h2>";
+        echo "<h2 class='text-center'> group: " . $rows['grp'] . "</h2>";
+        echo "<h2 class='text-center'> seat: " . $rows['seat'] . "</h2>";
 
-    echo "<h2 class='text-center'> user_id: " . $rows['user_id'] . "</h2>";
-    echo "<h2 class='text-center'> group: " . $rows['grp'] . "</h2>";
-    echo "<h2 class='text-center'> seat: " . $rows['seat'] . "</h2>";
-
-    $result->free();
-}
-$mysqli->close();
-?>
+// Release Database
+        $result->free();
+    }
+    $mysqli->close();
+    ?>
 
 </div>
 
