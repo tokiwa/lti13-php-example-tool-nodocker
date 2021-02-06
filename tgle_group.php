@@ -26,9 +26,12 @@
         <p class="text-center">Tools for Group Learning Environment</p>
     </div>
 
-
 <?php
-$user_id = "17X3113";
+
+if(isset($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
+}
+
 $mysqli = new mysqli('localhost', 'tgleuser', 'tglepass', 'tgle');
 
 if ($mysqli->connect_error) {
