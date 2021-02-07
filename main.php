@@ -11,8 +11,12 @@
     // In detail, you can inspect data by IDE such as PhpStorm
     //
 
-    $redirect_url = "/tgle_main.php?launch_id=".$launch->get_launch_id();
-
-    header("Location:".$redirect_url);
+    // Go to
+    if(strpos($launch->get_launch_data()['https://purl.imsglobal.org/spec/lti/claim/roles'][0],"Instructor") !== false) {
+        $redirect_url = "/tgle_instructor.php?launch_id=" . $launch->get_launch_id();
+    } else {
+        $redirect_url = "/tgle_learner.php?launch_id=" . $launch->get_launch_id();
+    }
+    header("Location:" . $redirect_url);
     exit();
     ?>

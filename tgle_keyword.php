@@ -27,6 +27,12 @@
         <p class="text-center">Tools for Group Learning Environment</p>
     </div>
 
+
+
+
+
+
+
     <?php
     require_once __DIR__ . '/vendor/autoload.php';
     require_once __DIR__ . '/db/example_database.php';
@@ -59,7 +65,7 @@
     $mysqli->close();
     ?>
     <p style="line-height : 20px;">　</p>
-    <h3 class='text-center'><a href="tgle_main.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
+    <h3 class='text-center'><a href="tgle_instructor.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
     </h3>
 </div>
 

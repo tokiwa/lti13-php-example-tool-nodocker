@@ -25,6 +25,7 @@
     <div class="jumbotron">
         <h1 class="text-center">TGLE</h1>
         <p class="text-center">Tools for Group Learning Environment</p>
+        <p class="text-center">for Instructor</p>
     </div>
 
     <?php
@@ -36,32 +37,21 @@
     $user_id = $launch->get_launch_data()['https://purl.imsglobal.org/spec/lti/claim/ext']['user_username'];
     $course_id = $launch->get_launch_data()['https://purl.imsglobal.org/spec/lti/claim/context']['label'];
 
-// Database search for latest group and seat position
-    $mysqli = new mysqli('localhost', 'tgleuser', 'tglepass', 'tgle');
-
-    if ($mysqli->connect_error) {
-        die("connect_error - " . $mysqli->connect_error);
-    } else {
-        $mysqli->set_charset("utf8");
-        $sql = 'select user_id,seat,grp from seats where user_id = "' . $user_id . '" order by updated_at desc limit 1 ';
-        $result = $mysqli->query($sql) or die("*tgle error* " . $sql);
-        $rows = $result->fetch_array(MYSQLI_ASSOC);
-
-// View data by Bootstrap
-        echo "<h2 class='text-center'> course_id: " . $course_id . "</h2>";
-        echo "<h2 class='text-center'> user_id: " . $rows['user_id'] . "</h2>";
-        echo "<h2 class='text-center'> group: " . $rows['grp'] . "</h2>";
-        echo "<h2 class='text-center'> seat: " . $rows['seat'] . "</h2>";
-
-// Release Database
-        $result->free();
-    }
-    $mysqli->close();
+    echo "<h3 class='text-center'>" . $launch->get_launch_data()['https://purl.imsglobal.org/spec/lti/claim/context']['title'] . "</h3>";
+    echo "<p class='text-center'>Course ID: " . $course_id . "</p>";
+    echo "<p class='text-center'>User ID: " . $user_id . "</p>";
+    echo "<p class='text-center'>Name: " . $launch->get_launch_data()['name'] . "</p>";
+    echo "<p class='text-center'>Mail: " . $launch->get_launch_data()['email'] . "</p>";
     ?>
-    <p style="line-height : 20px;">　</p>
-    <h3 class='text-center'><a href="tgle_instructor.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
-    </h3>
-</div>
 
+    <p style="line-height : 20px;">　</p>
+
+    <h3 class='text-center'><a href="tgle_group.php?launch_id=<?= $launch->get_launch_id(); ?>"> グループ/座席一覧 </a>
+    </h3>
+    <p style="line-height : 20px;">　</p>
+    <h3 class='text-center'><a href="tgle_keyword.php?launch_id=<?= $launch->get_launch_id(); ?>"> Keyword入力一覧 </a>
+    </h3>
+
+</div>
 </body>
 </html>
