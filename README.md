@@ -9,14 +9,14 @@ https://github.com/IMSGlobal/lti-1-3-php-example-tool
 また、この実装例ではLTI1.3
 Toolのソースコード以外にPlatform等のコードが組み込まれている。そのため、初めてLTI1.
 3を実行しようとする開発者において、エラーが生じたときにソースコードを追っていくことが難しい。また、Docker環境においてデバッグ環境を構築する知識も必要となる。そこで、XAMPPを実行環境とし、LTI1.3
-Toolを実行するために必要なコードだけで構成されたパッケージを作成した。
+Toolを実行するために必要なコードだけで構成されたパッケージに作り直した。
 このパッケージでは次の機能が実装されている。
 
 - LTI1.3 Tool Core
 - LTI Advantage
   - LTI1.3 AGS (Assignment and Grade Services)  
   - LTI1.3 NRPS (Names and Role Provisioning Services)
-  - LTI1.3 Deep Link
+  - LTI1.3 Deep Linking
 
 ## Platform環境
 
@@ -43,11 +43,11 @@ Toolの実行は、開発を行っているPCでWebサーバを稼働させる�
   
 そのため XAMPPを利用する。下記の環境での稼働実績を確認している。
 
-localhost
+**開発しているローカルPC**
 - Windows 10 + xampp-windows-x64-7.3.23-0-VC15
 
-AWS 
-- Linux2 + xampp-linux-x64-7.3.23-0-installer.run
+**AWSで提供されるサーバ** 
+- AWS Linux2 + xampp-linux-x64-7.3.23-0-installer.run
 
 XAMPPについては下記の設定が必要となる。
 
@@ -55,14 +55,14 @@ XAMPPについては下記の設定が必要となる。
 
 ```
 error_reporting=E_ALL & ~E_NOTICE
-
 ```
 
 - https化。LTI1.3
   はPlatformとTool間がTSL1.2で保証されていることが前提となっている。そのため自己証明書によるSSL化をする。localhostのSSL化の情報は多々存在するが、下記などを参考にする。
   https://qiita.com/sutara79/items/21a068494bc3a08a4803
 - DocumentRootの設定事例を示す。xampp/apache/conf/extra/httpd-ssl.conf を下記に設定する。Document Root は git
-  cloneして生成されるフォルダーではなく、{展開されたフォルダー}/web とする。
+  cloneして生成されるフォルダーではなく、{サンプルプログラムを展開したディレクトリ}/web 
+  とする。この事例では、G:/lti13-php-example-tool-nodocker　というフォルダーに git clone　している。
 
 ```
 ##### Listen is Required for LTI13
@@ -117,7 +117,6 @@ CustomLog "D:/xampp/apache/logs/ssl_request.log" \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
 </VirtualHost>       
-
 ```
 
 ## Moodleにおける設定
@@ -132,9 +131,13 @@ CustomLog "D:/xampp/apache/logs/ssl_request.log" \
 
 ## Toolにおける設定
 
-1. Moodleで外部ツールを設定したときに提供された情報を db/config/local.json に追加する。
+1. {サンプルプログラムを展開したディレクトリ} にて下記を実行する。IMS LTI Library は vendor　ディレクトリが作成され、そこにインストールされる。
+```
+    composer.phar install
+```
+2. Moodleで外部ツールを設定したときに提供された情報を db/config/local.json に追加する。
 なお、private_key_file はTool用に生成した秘密鍵を指定し、公開鍵は上述したMoodleにおける外部ツールの設定にて指定する。日本IMS協会で提供するMoodle
-を使う場合には、このサンプルプリグラムで使っているTool_Pri.keyをそのまま使う。
+を使う場合には、このサンプルプログラムで使っているTool_Pri.keyをそのまま使う。
 ```
     "https://c3.yujitokiwa.jp/moodle": {
         "client_id": "C1I9mztu7D1zL5o",
@@ -147,7 +150,7 @@ CustomLog "D:/xampp/apache/logs/ssl_request.log" \
         ]
     },
 ```
-1. 自己証明書などによってSSL化したhttpdサーバーにおいて、DocumentRootは{サンプルプログラムのディレクトリ}/web で設定する。
+3. 自己証明書などによってSSL化したhttpdサーバーにおいて、DocumentRootは{サンプルプログラムを展開したディレクトリ}/web で設定する。
 
 ## Platformからの起動
 
@@ -169,9 +172,12 @@ Deep Linkingは教員ID
 
 ## デバッグ
 
-設定すべきパラメータが多いため、多くの場合、設定後の接続テスト直後の起動は成功しない。確認すべきことは多々あるので、その方法を列挙する。
+設定すべきパラメータが多いため、多くの場合、設定後の接続テスト直後の起動は成功しない。確認すべきことは多々あるので、代表的な確認項目を列挙する。
 
 1. https://localhost/imsjtool.php で、login.phpやgame.phpのディレクトリにアクセスできることを確認する。
 1. local.json において、同一のPlatformを異なるdeploymentナンバーで複数設定するとエラーが生じるので、不要なエントリは削除する。
 1. Moodleの外部ツールの設定はデフォルトから変更されていることを確認する。
-1. xdebugを導入し、PhpStormなどでBreakpointを設定してデバッグする。
+1. xdebugを導入し、PhpStormなどでBreakpointを設定してデバッグする。PhpStormはアカデミックユーザの場合、所定の手続きをすれば無償で利用できる。
+1. ブラウザがFirefoxでかつPCでToolを稼働させる場合、ブラウザーオプションの証明書マネージャーにてlocalhost:443のサーバ証明書のエラー例外を設定していることを確認する。
+
+
