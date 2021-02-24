@@ -131,7 +131,7 @@ CustomLog "D:/xampp/apache/logs/ssl_request.log" \
 
 ## Toolにおける設定
 
-1. {サンプルプログラムを展開したディレクトリ} にて下記を実行する。IMS LTI Library は vendor　ディレクトリが作成され、そこにインストールされる。
+1. {サンプルプログラムを展開したディレクトリ} にて下記を実行する。vendor　ディレクトリが新規に作成され、そこにIMS LTI Library がインストールされる。
 ```
     composer.phar install
 ```
