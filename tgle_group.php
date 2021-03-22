@@ -48,10 +48,10 @@
         $rows = $result->fetch_array(MYSQLI_ASSOC);
 
 // View data by Bootstrap
-        echo "<h2 class='text-center'> course_id: " . $course_id . "</h2>";
-        echo "<h2 class='text-center'> user_id: " . $rows['user_id'] . "</h2>";
-        echo "<h2 class='text-center'> group: " . $rows['grp'] . "</h2>";
-        echo "<h2 class='text-center'> seat: " . $rows['seat'] . "</h2>";
+        echo "<h2 class='text-center'> Course ID: " . $course_id . "</h2>";
+        echo "<h2 class='text-center'> User ID: " . $rows['user_id'] . "</h2>";
+        echo "<h2 class='text-center'> グループ ID: " . $rows['grp'] . "</h2>";
+        echo "<h2 class='text-center'> 座席位置: " . $rows['seat'] . "</h2>";
 
 // Release Database
         $result->free();
@@ -59,7 +59,7 @@
     $mysqli->close();
     ?>
     <p style="line-height : 20px;">　</p>
-    <h3 class='text-center'><a href="tgle_instructor.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
+    <h3 class='text-center'><a href="tgle_learner.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
     </h3>
 </div>
 

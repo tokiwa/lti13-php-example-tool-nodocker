@@ -27,12 +27,6 @@
         <p class="text-center">Tools for Group Learning Environment</p>
     </div>
 
-
-
-
-
-
-
     <?php
     require_once __DIR__ . '/vendor/autoload.php';
     require_once __DIR__ . '/db/example_database.php';
@@ -49,23 +43,30 @@
         die("connect_error - " . $mysqli->connect_error);
     } else {
         $mysqli->set_charset("utf8");
-        $sql = 'select user_id,seat,grp from seats where user_id = "' . $user_id . '" order by updated_at desc limit 1 ';
+
+        $sql = 'select user_id,keyword1,keyword2, keyword3 from keywords where user_id = "' . $user_id . '" order by updated_at desc limit 1 ';
         $result = $mysqli->query($sql) or die("*tgle error* " . $sql);
         $rows = $result->fetch_array(MYSQLI_ASSOC);
 
 // View data by Bootstrap
-        echo "<h2 class='text-center'> course_id: " . $course_id . "</h2>";
-        echo "<h2 class='text-center'> user_id: " . $rows['user_id'] . "</h2>";
-        echo "<h2 class='text-center'> group: " . $rows['grp'] . "</h2>";
-        echo "<h2 class='text-center'> seat: " . $rows['seat'] . "</h2>";
+        echo "<h2 class='text-center'> Course ID: " . $course_id . "</h2>";
+        echo "<h2 class='text-center'> keyword1: " . $rows['keyword1'] . "</h2>";
+        echo "<h2 class='text-center'> keyword2: " . $rows['keyword2'] . "</h2>";
+        echo "<h2 class='text-center'> keyword3: " . $rows['keyword3'] . "</h2>";
 
 // Release Database
         $result->free();
     }
     $mysqli->close();
     ?>
+
+<!--    ここにkeyword入力画面を追加する-->
+
+
+
+
     <p style="line-height : 20px;">　</p>
-    <h3 class='text-center'><a href="tgle_instructor.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
+    <h3 class='text-center'><a href="tgle_learner.php?launch_id=<?= $launch->get_launch_id(); ?>"> TOPに戻る </a>
     </h3>
 </div>
 
